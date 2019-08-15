@@ -1,0 +1,60 @@
+{
+	"name": "config-defaults",
+	"displayName": "Config Defaults",
+	"description": "Initializes settings.json and other config files from defaults files",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ChaosinaCan/vscode-config-defaults"
+	},
+	"author": {
+		"name": "Joel Spadin",
+		"email": "joelspadin@gmail.com",
+		"url": "https://github.com/ChaosinaCan"
+	},
+	"publisher": "spadin",
+	"license": "MIT",
+	"version": "1.0.0",
+	"engines": {
+		"vscode": "^1.37.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:configDefaults.initializeAllFiles",
+		"workspaceContains:.vscode/**/*.default.*"
+	],
+	"main": "./dist/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "configDefaults.initializeAllFiles",
+				"title": "Initialize Config Files",
+				"category": "Config Defaults"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "webpack --mode production",
+		"webpack": "webpack --mode development",
+		"webpack-dev": "webpack --mode development --watch --info-verbosity verbose",
+		"test-compile": "tsc -p ./",
+		"pretest": "npm run test-compile",
+		"test": "node ./out/test/runTest.js",
+		"package": "vsce package"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.1.1",
+		"@types/mocha": "^5.2.6",
+		"@types/node": "^10.12.21",
+		"@types/vscode": "^1.37.0",
+		"glob": "^7.1.4",
+		"mocha": "^6.1.4",
+		"ts-loader": "^6.0.4",
+		"tslint": "^5.12.1",
+		"typescript": "^3.3.1",
+		"vscode-test": "^1.0.2",
+		"webpack": "^4.39.1",
+		"webpack-cli": "^3.3.6"
+	}
+}
