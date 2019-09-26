@@ -13,9 +13,9 @@
 	},
 	"publisher": "spadin",
 	"license": "MIT",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"engines": {
-		"vscode": "^1.37.0"
+		"vscode": "^1.38.0"
 	},
 	"categories": [
 		"Other"
@@ -32,6 +32,18 @@
 				"title": "Initialize Config Files",
 				"category": "Config Defaults"
 			}
+		],
+		"languages": [
+			{
+				"id": "jsonc",
+				"filenames": [
+					"settings.default.json",
+					"launch.default.json",
+					"tasks.default.json",
+					"keybindings.default.json",
+					"extensions.default.json"
+				]
+			}
 		]
 	},
 	"scripts": {
@@ -46,15 +58,15 @@
 	"devDependencies": {
 		"@types/glob": "^7.1.1",
 		"@types/mocha": "^5.2.6",
-		"@types/node": "^10.12.21",
-		"@types/vscode": "^1.37.0",
+		"@types/node": "^10.14.19",
+		"@types/vscode": "^1.38.0",
 		"glob": "^7.1.4",
 		"mocha": "^6.1.4",
-		"ts-loader": "^6.0.4",
-		"tslint": "^5.12.1",
-		"typescript": "^3.3.1",
+		"ts-loader": "^6.1.2",
+		"tslint": "^5.20.0",
+		"typescript": "^3.6.3",
 		"vscode-test": "^1.0.2",
-		"webpack": "^4.39.1",
-		"webpack-cli": "^3.3.6"
+		"webpack": "^4.41.0",
+		"webpack-cli": "^3.3.9"
 	}
 }
