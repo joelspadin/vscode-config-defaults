@@ -3,7 +3,7 @@
 Initializes `settings.json` and other `.vscode` config files from defaults files.
 
 Upon opening a workspace, this extension will look for any files under the
-`.vscode` directory named `[filename].defaults.[ext]` and copy them to
+`.vscode` directory named `[filename].default.[ext]` and copy them to
 `[filename].[ext]` unless they already exist.
 
 This allows you to check Visual Studio Code configuration files into source
