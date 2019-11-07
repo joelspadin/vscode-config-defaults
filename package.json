@@ -13,15 +13,16 @@
 	},
 	"publisher": "spadin",
 	"license": "MIT",
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"engines": {
-		"vscode": "^1.38.0"
+		"vscode": "^1.39.0"
 	},
 	"categories": [
 		"Other"
 	],
 	"activationEvents": [
 		"onCommand:configDefaults.initializeAllFiles",
+		"onCommand:configDefaults.compare",
 		"workspaceContains:.vscode/**/*.default.*"
 	],
 	"main": "./dist/extension.js",
@@ -30,6 +31,11 @@
 			{
 				"command": "configDefaults.initializeAllFiles",
 				"title": "Initialize Config Files",
+				"category": "Config Defaults"
+			},
+			{
+				"command": "configDefaults.compare",
+				"title": "Compare Config File...",
 				"category": "Config Defaults"
 			}
 		],
@@ -58,15 +64,18 @@
 	"devDependencies": {
 		"@types/glob": "^7.1.1",
 		"@types/mocha": "^5.2.6",
-		"@types/node": "^10.14.19",
-		"@types/vscode": "^1.38.0",
-		"glob": "^7.1.4",
-		"mocha": "^6.1.4",
-		"ts-loader": "^6.1.2",
-		"tslint": "^5.20.0",
-		"typescript": "^3.6.3",
-		"vscode-test": "^1.0.2",
-		"webpack": "^4.41.0",
-		"webpack-cli": "^3.3.9"
+		"@types/node": "^10.17.4",
+		"@types/vscode": "^1.39.0",
+		"glob": "^7.1.6",
+		"mocha": "^6.2.2",
+		"ts-loader": "^6.2.1",
+		"tslint": "^5.20.1",
+		"typescript": "^3.7.2",
+		"vscode-test": "^1.2.2",
+		"webpack": "^4.41.2",
+		"webpack-cli": "^3.3.10"
+	},
+	"dependencies": {
+		"stream-equal": "^1.1.1"
 	}
 }

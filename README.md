@@ -13,6 +13,12 @@ example, if you check in `.vscode/settings.default.json` and
 be created upon opening the project for the first time. If these files already
 exist, they will be left unmodified.
 
+## Comparing Current Configuration with Defaults
+
+To compare a config file with its defaults, run the
+`Config Defaults: Compare Config File...` command and select a file. If the list
+is empty, then all files match the defaults.
+
 ## Resetting Configuration
 
 To reset a config file to its defaults, delete the file and run the

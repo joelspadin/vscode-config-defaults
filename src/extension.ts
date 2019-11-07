@@ -1,10 +1,10 @@
 import * as vscode from 'vscode';
-import { initAllFiles, initWorkspaceFiles } from './config';
+import { initAllFiles, initWorkspaceFiles, compareFile } from './config';
 
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.commands.registerCommand('configDefaults.initializeAllFiles', initAllFiles),
-		// TODO: add a command to merge defaults into current user files
+		vscode.commands.registerCommand('configDefaults.compare', compareFile),
 	);
 
 	// Automatically update any folders added to the workspace.
