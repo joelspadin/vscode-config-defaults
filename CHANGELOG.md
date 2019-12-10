@@ -1,6 +1,6 @@
 # Change Log
 
-## Unreleased
+## 1.3.0
 - Fixed `Config Defaults: Compare Config File...` on VS Code 1.40+.
 - Fixed errors when using `Config Defaults: Compare Config File...` and the
 	default file exists but the user file does not.
