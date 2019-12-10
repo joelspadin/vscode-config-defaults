@@ -1,13 +1,11 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as vscode from 'vscode';
-import { promisify } from 'util';
-import { areFilesIdentical } from './util';
+
+import { areFilesIdentical, basename, exists } from './util';
 
 const DEFAULTS_GLOB_PATTERN = '.vscode/**/*.default.*';
 const DEFAULTS_REGEX = /\.default(?=\.[^.]+$)/;
-
-const copyFile = promisify(fs.copyFile);
 
 interface ChangedFile {
 	workspaceFolder: vscode.WorkspaceFolder;
@@ -36,15 +34,7 @@ export async function initWorkspaceFiles(folder: vscode.WorkspaceFolder) {
 		const userFile = getUserFile(defaultsFile);
 
 		if (userFile !== defaultsFile.fsPath) {
-			try {
-				await copyFile(defaultsFile.fsPath, userFile, fs.constants.COPYFILE_EXCL);
-			} catch (ex) {
-				// We don't want to overwrite the file if it already exists.
-				// Any other error is unexpected.
-				if (ex.code !== 'EEXIST') {
-					throw ex;
-				}
-			}
+			await copyDefaultsFile(defaultsFile, vscode.Uri.file(userFile));
 		}
 	}
 }
@@ -59,8 +49,11 @@ export async function compareFile() {
 	});
 
 	if (result) {
-		const title = `${path.basename(result.defaultsFile.fsPath)} ↔ ${path.basename(result.userFile.fsPath)}`;
-		vscode.commands.executeCommand('vscode.diff', result.defaultsFile, result.userFile, title);
+		if (await exists(result.userFile.fsPath)) {
+			showDiff(result.defaultsFile, result.userFile);
+		} else {
+			await promptCopyFile(result.defaultsFile, result.userFile);
+		}
 	}
 }
 
@@ -75,13 +68,13 @@ function getUserFile(defaultsFile: vscode.Uri) {
 	return defaultsFile.fsPath.replace(DEFAULTS_REGEX, '');
 }
 
-async function *getChangedFiles(): AsyncGenerator<ChangedFile> {
+async function* getChangedFiles(): AsyncGenerator<ChangedFile> {
 	if (vscode.workspace.workspaceFolders) {
 		for (const workspaceFolder of vscode.workspace.workspaceFolders) {
 			for (const defaultsFile of await getDefaultsFiles(workspaceFolder)) {
 				const userFile = getUserFile(defaultsFile);
 
-				if (!await areFilesIdentical(defaultsFile.fsPath, userFile)) {
+				if (!(await areFilesIdentical(defaultsFile.fsPath, userFile))) {
 					yield {
 						workspaceFolder,
 						defaultsFile,
@@ -109,4 +102,30 @@ async function getChangedFilePickItems() {
 	}
 
 	return items;
+}
+
+async function copyDefaultsFile(defaultsFile: vscode.Uri, userFile: vscode.Uri) {
+	try {
+		await fs.promises.copyFile(defaultsFile.fsPath, userFile.fsPath, fs.constants.COPYFILE_EXCL);
+	} catch (ex) {
+		// We don't want to overwrite the file if it already exists.
+		// Any other error is unexpected.
+		if (ex.code !== 'EEXIST') {
+			throw ex;
+		}
+	}
+}
+
+function showDiff(defaultsFile: vscode.Uri, userFile: vscode.Uri) {
+	const title = `${basename(defaultsFile)} ↔ ${basename(userFile)}`;
+	vscode.commands.executeCommand('vscode.diff', defaultsFile, userFile, title);
+}
+
+async function promptCopyFile(defaultsFile: vscode.Uri, userFile: vscode.Uri) {
+	const initialize = `Initialize from ${basename(defaultsFile)}`;
+	const response = await vscode.window.showInformationMessage(`${basename(userFile)} does not exist.`, initialize);
+	if (response === initialize) {
+		await copyDefaultsFile(defaultsFile, userFile);
+		vscode.window.showTextDocument(userFile);
+	}
 }

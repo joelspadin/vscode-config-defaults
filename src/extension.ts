@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
-import { initAllFiles, initWorkspaceFiles, compareFile } from './config';
+
+import { compareFile, initAllFiles, initWorkspaceFiles } from './config';
 
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
@@ -8,7 +9,7 @@ export function activate(context: vscode.ExtensionContext) {
 	);
 
 	// Automatically update any folders added to the workspace.
-	vscode.workspace.onDidChangeWorkspaceFolders(async (e) => {
+	vscode.workspace.onDidChangeWorkspaceFolders(async e => {
 		for (const folder of e.added) {
 			await initWorkspaceFiles(folder);
 		}

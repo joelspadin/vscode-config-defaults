@@ -56,6 +56,7 @@
 		"vscode:prepublish": "webpack --mode production",
 		"webpack": "webpack --mode development",
 		"webpack-dev": "webpack --mode development --watch --info-verbosity verbose",
+		"lint": "tslint -p ./",
 		"test-compile": "tsc -p ./",
 		"pretest": "npm run test-compile",
 		"test": "node ./out/test/runTest.js",
@@ -68,8 +69,11 @@
 		"@types/vscode": "^1.40.0",
 		"glob": "^7.1.6",
 		"mocha": "^6.2.2",
+		"prettier": "^1.19.1",
 		"ts-loader": "^6.2.1",
 		"tslint": "^5.20.1",
+		"tslint-config-prettier": "^1.18.0",
+		"tslint-plugin-prettier": "^2.0.1",
 		"typescript": "^3.7.3",
 		"vscode-test": "^1.2.3",
 		"webpack": "^4.41.2",
@@ -77,5 +81,11 @@
 	},
 	"dependencies": {
 		"stream-equal": "^1.1.1"
+	},
+	"prettier": {
+		"singleQuote": true,
+		"trailingComma": "all",
+		"tabWidth": 4,
+		"printWidth": 120
 	}
 }
