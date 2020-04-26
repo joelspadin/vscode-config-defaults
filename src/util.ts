@@ -46,5 +46,5 @@ export async function exists(path: string) {
 }
 
 function statFiles(...paths: readonly string[]) {
-	return Promise.all(paths.map(p => fs.promises.stat(p)));
+	return Promise.all(paths.map((p) => fs.promises.stat(p)));
 }

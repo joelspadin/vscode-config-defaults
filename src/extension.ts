@@ -9,7 +9,7 @@ export function activate(context: vscode.ExtensionContext) {
 	);
 
 	// Automatically update any folders added to the workspace.
-	vscode.workspace.onDidChangeWorkspaceFolders(async e => {
+	vscode.workspace.onDidChangeWorkspaceFolders(async (e) => {
 		for (const folder of e.added) {
 			await initWorkspaceFiles(folder);
 		}
@@ -19,4 +19,6 @@ export function activate(context: vscode.ExtensionContext) {
 	initAllFiles();
 }
 
-export function deactivate() {}
+export function deactivate() {
+	// Nothing to do.
+}
